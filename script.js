@@ -4,86 +4,104 @@ document.addEventListener("DOMContentLoaded", function() {
     {
       question: "Baja 😘 Do you miss me now?",
       options: [
-        "Yes, romba miss panren 😘",
-        "Konjam 😏",
-        "Illa (poi solladha 😤)"
+        { text: "Yes, romba miss panren 😘", reply: "Awwww 🥹 naanum romba miss panren da ❤️" },
+        { text: "Konjam 😏", reply: "Konjam ah? Seri adhukku extra hug venum 😌" },
+        { text: "Illa (poi solladha 😤)", reply: "Ayyooo poi solladha 😤 un face la theriyuthu!" }
       ]
     },
     {
       question: "If I am next to you now…?",
       options: [
-        "Tight hug 🤗",
-        "Kiss first 😘",
-        "Just look at you 🥺"
+        { text: "Tight hug 🤗", reply: "Appo vidama hug panra maari dhan irukanum 😌" },
+        { text: "Kiss first 😘", reply: "Seri seri calm ah iru 😳 naanum ready dhan 😘🔥" },
+        { text: "Just look at you 🥺", reply: "Enna paakura? Already unaku naan dhan world 😌❤️" }
       ]
     },
     {
       question: "Who loves more?",
       options: [
-        "Nee dhaan ❤️",
-        "Naan dhaan 💕",
-        "Both equally 🤝"
+        { text: "Nee dhaan ❤️", reply: "Awww Baja 😭 ipdi sonna melt aagiten!" },
+        { text: "Naan dhaan 💕", reply: "Adhu seri 😌 but naan konjam extra love panren 😏" },
+        { text: "Both equally 🤝", reply: "Correct answer 😌 namma balance couple 💕" }
       ]
     },
     {
       question: "Will you be mine forever?",
       options: [
-        "Forever da 😍",
-        "Of course loosu ❤️",
-        "Always and always ♾️"
+        { text: "Forever da 😍", reply: "Appo lifetime contract signed 😌❤️" },
+        { text: "Of course loosu ❤️", reply: "Loosu ah? Seri un loosu dhan naan 😘" },
+        { text: "Always and always ♾️", reply: "Infinity ah? Appo lifetime hugs unlimited 🥹💕" }
       ]
     }
   ];
 
   let index = 0;
-  let answers = [];
 
   const questionElement = document.getElementById("question");
   const buttonsDiv = document.querySelector(".buttons");
+  const resultElement = document.getElementById("result");
+  const imageElement = document.getElementById("mainImage");
+  const popup = document.getElementById("popup");
+  const popupText = document.getElementById("popupText");
 
   function loadQuestion() {
+    resultElement.innerHTML = "";
     questionElement.innerText = questions[index].question;
     buttonsDiv.innerHTML = "";
 
     questions[index].options.forEach(option => {
       const button = document.createElement("button");
-      button.innerText = option;
+      button.innerText = option.text;
       button.onclick = () => nextQuestion(option);
       buttonsDiv.appendChild(button);
     });
   }
 
-  function nextQuestion(choice) {
-    answers.push(choice);
-    index++;
+  function nextQuestion(option) {
 
-    if (index < questions.length) {
-      loadQuestion();
-    } else {
-      showResult();
-    }
+    // Funny popup messages
+    const funnyMessages = [
+      "Hmmmm interesting choice 🤨",
+      "Ayyooo seri seri 😏",
+      "Nallaaa think pannitu click panniruka pola 😂",
+      "Danger answer da 😈",
+      "Ippo dhan unma theriyudhu 😌"
+    ];
+
+    const randomFunny =
+      funnyMessages[Math.floor(Math.random() * funnyMessages.length)];
+
+    popupText.innerText = randomFunny;
+    popup.style.display = "block";
+
+    setTimeout(() => {
+      popup.style.display = "none";
+    }, 1000);
+
+    resultElement.innerHTML = option.reply;
+
+    setTimeout(() => {
+      index++;
+      if (index < questions.length) {
+        loadQuestion();
+      } else {
+        showFinalMessage();
+      }
+    }, 1500);
   }
 
-  function showResult() {
+  function showFinalMessage() {
     document.getElementById("question-box").style.display = "none";
 
-    let finalMessage = "";
+    // Change image to Baja + Aadhini
+    imageElement.src = "baja-aadhini.jpg";
 
-    if (answers.includes("Illa (poi solladha 😤)")) {
-      finalMessage = "Ayyooo Baja 😤 poi solladha! I know you miss me rombaaa 😌❤️";
-    } 
-    else if (answers.includes("Kiss first 😘")) {
-      finalMessage = "Seri seri 😘 already ready ah? Naanum ready dhan Baja ❤️🔥";
-    }
-    else if (answers.includes("Nee dhaan ❤️")) {
-      finalMessage = "Awww Baja 😭 Nee dhaan romba love panra nu sollita… melt aagiten ❤️";
-    }
-    else {
-      finalMessage = "No matter what you chose… Baja ❤️ naan unna rombaaa love panren 🥹💖";
-    }
-
-    document.getElementById("result").innerHTML =
-      finalMessage + "<br><br>Happy Valentine’s Day da 💌✨";
+    resultElement.innerHTML =
+      "Baja ❤️<br><br>" +
+      "From lovers… to husband & wife… to Aadhini’s parents 🥹👶💕<br><br>" +
+      "Namma kutty princess oda best Appa neetha da.<br><br>" +
+      "Aadhini and I love you so much 💖<br><br>" +
+      "Happy Valentine’s Day da 💌✨";
   }
 
   loadQuestion();
