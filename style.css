@@ -21,11 +21,17 @@ body {
 
 h1 {
   color: #e91e63;
-  margin-bottom: 10px;
 }
 
 p {
   font-size: 16px;
+}
+
+.main-photo {
+  width: 100%;
+  border-radius: 20px;
+  margin: 15px 0;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
 }
 
 .buttons {
@@ -57,10 +63,23 @@ p {
   font-weight: bold;
 }
 
-.main-photo {
-  width: 100%;
+/* Popup Styling */
+.popup {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff8fab;
+  color: white;
+  padding: 12px 20px;
   border-radius: 20px;
-  margin: 15px 0;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+  display: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  font-weight: bold;
+  animation: fadeIn 0.3s ease;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
